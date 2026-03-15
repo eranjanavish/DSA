@@ -96,7 +96,7 @@ struct token* issue_token(struct token_list *list){
     scanf("%s",token->address);
     printf("Enter Customer Phone number :");
     scanf("%d",&token->phone_number);
-    printf("Enter Priority level : (1-High , 2-Low)");
+    printf("Enter Priority level : (1-High , 2-Low) : ");
     scanf("%d",&token->priority);
     list->head=list->head->next;
     printf("Token Created\n");
