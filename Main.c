@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Token_Generator/token.h"
+#include "Undo_Stack/undo_stack.h" 
+
 // use this commnad to run the c file -  gcc main.c ./Token_Generator/token.c -o token_program
 //And then -  ./token_program     
 int main(){
@@ -44,6 +46,11 @@ int main(){
 
             case 2:
                 printf("Option 2 Selected");
+
+                 run_undo_menu(&undo_stack,
+                  &list,
+                  counter_head,
+                  counter_count);
 
                 //Counter operator selects the counter and start giving service to the tokens
 
