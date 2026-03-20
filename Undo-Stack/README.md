@@ -123,27 +123,6 @@ clear_stack(&undo_stack);
 
 ---
 
-## What to Add to Token Generator
-
-Add this function to `token.h` and `token.c`:
-
-```c
-// token.h
-struct token* find_token_by_id(struct token_list *list, int id);
-
-// token.c
-struct token* find_token_by_id(struct token_list *list, int id) {
-    struct token *temp = list->head;
-    while (temp != NULL) {
-        if (temp->token_id == id)
-            return temp;
-        temp = temp->next;
-    }
-    return NULL;
-}
-```
-
----
 
 ## Compile Command
 
