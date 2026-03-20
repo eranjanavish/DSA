@@ -11,10 +11,9 @@ int main(){
         struct token_list list;
         initialize_token_list(&list);
         create_tokens_1_100(&list);
-    
-        
-    
-        
+
+        struct stack undo_stack;
+        initialize_stack(&undo_stack);
         
         //Starts the program
         while(1){
