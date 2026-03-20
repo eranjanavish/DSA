@@ -1,0 +1,133 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+typedef struct Node {
+    int tokenID;
+    char name[50];
+    char service[50];
+    struct Node* next;
+    struct Node* prev;
+} Node;
+
+Node* head = NULL;
+Node* tail = NULL;
+
+
+void addToHistory(int id, char* citizenName, char* serviceName) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->tokenID = id;
+    strcpy(newNode->name, citizenName);
+    strcpy(newNode->service, serviceName);
+    newNode->next = NULL;
+    newNode->prev = NULL;
+
+    if (head == NULL) {
+        head = tail = newNode;
+    } else {
+        tail->next = newNode;
+        newNode->prev = tail;
+        tail = newNode;
+    }
+    printf("\n[System] Token %d (%s) added to Completed History.\n", id, citizenName);
+}
+
+
+void traverseHistory() {
+    if (head == NULL) {
+        printf("\nHistory is empty.\n");
+        return;
+    }
+
+    int choice;
+    printf("\n--- Navigation Menu ---");
+    printf("\n1. View History Forward (Oldest to Newest)");
+    printf("\n2. View History Backward (Newest to Oldest)");
+    printf("\nEnter choice: ");
+    scanf("%d", &choice);
+
+    if (choice == 1) {
+        Node* temp = head;
+        printf("\nForward History:\n");
+        while (temp != NULL) {
+            printf("[Token %d | %s | %s] <-> ", temp->tokenID, temp->name, temp->service);
+            temp = temp->next;
+        }
+        printf("NULL\n");
+    } else if (choice == 2) {
+        Node* temp = tail;
+        printf("\nBackward History (Recent First):\n");
+        while (temp != NULL) {
+            printf("[Token %d | %s | %s] <-> ", temp->tokenID, temp->name, temp->service);
+            temp = temp->prev;
+        }
+        printf("NULL\n");
+    } else {
+        printf("Invalid choice.\n");
+    }
+}
+
+
+
+void searchRecord(int id) {
+    if (head == NULL) {
+        printf("\nNo records to search.\n");
+        return;
+    }
+
+    Node* temp = head;
+    while (temp != NULL) {
+        if (temp->tokenID == id) {
+            printf("\n--- Record Found ---");
+            printf("\nToken ID: %d", temp->tokenID);
+            printf("\nCitizen Name: %s", temp->name);
+            printf("\nService: %s", temp->service);
+            printf("\n--------------------\n");
+            return;
+        }
+        temp = temp->next;
+    }
+    printf("\nRecord with Token ID %d not found.\n", id);
+}
+
+int main() {
+    int choice, id;
+
+
+    while (1) {
+        printf("\n--- COMPLETED HISTORY ---");
+        printf("\n1. Add Record (Simulate Completion)");
+        printf("\n2. Traverse History (Navigation)");
+        printf("\n3. Search Specific Record");
+        printf("\n4. Exit");
+        printf("\nEnter choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter Token ID: ");
+                scanf("%d", &id);
+                char name[50], service[50];
+                printf("Enter Name: ");
+                scanf("%s", name);
+                printf("Enter Service: ");
+                scanf("%s", service);
+                addToHistory(id, name, service);
+                break;
+            case 2:
+                traverseHistory();
+                break;
+            case 3:
+                printf("Enter Token ID to search: ");
+                scanf("%d", &id);
+                searchRecord(id);
+                break;
+            case 4:
+                exit(0);
+            default:
+                printf("Invalid choice!\n");
+        }
+    }
+    return 0;
+}
